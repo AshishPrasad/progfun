@@ -20,9 +20,13 @@ object Huffman {
     */
   abstract class CodeTree
 
-  case class Fork(left: CodeTree, right: CodeTree, chars: List[Char], weight: Int) extends CodeTree
+  case class Fork(left: CodeTree, right: CodeTree, chars: List[Char], weight: Int) extends CodeTree {
+    override def toString: String = s"[$left.(${chars.mkString("")}, $weight).$right]"
+  }
 
-  case class Leaf(char: Char, weight: Int) extends CodeTree
+  case class Leaf(char: Char, weight: Int) extends CodeTree {
+    override def toString: String = s"($char, $weight)"
+  }
 
 
   // Part 1: Basics
@@ -157,8 +161,8 @@ object Huffman {
     * the example invocation. Also define the return type of the `until` function.
     * - try to find sensible parameter names for `xxx`, `yyy` and `zzz`.
     */
-  def until(xxx: List[CodeTree] => Boolean, yyy: List[CodeTree] => List[CodeTree])(zzz: List[CodeTree]): List[CodeTree] = {
-    if (xxx(zzz)) zzz else until(xxx, yyy)(yyy(zzz))
+  def until[T](test: List[T] => Boolean, convert: List[T] => List[T])(list: List[T]): List[T] = {
+    if (test(list)) list else until(test, convert)(convert(list))
   }
 
   /**
@@ -239,6 +243,7 @@ object Huffman {
     * This function returns the bit sequence that represents the character `char` in
     * the code table `table`.
     */
+  @tailrec
   def codeBits(table: CodeTable)(char: Char): List[Bit] = table match {
     case Nil => Nil
     case (c, list) :: xs => if (c.equals(char)) list else codeBits(xs)(char)
@@ -279,7 +284,7 @@ object Huffman {
       @tailrec
       def quickEncodeHelper(te: List[Char], acc: List[Bit])(implicit codeTable: CodeTable): List[Bit] = te match {
         case Nil => acc
-        case x :: xs => quickEncodeHelper(xs, codeBits(codeTable)(x) ::: acc)
+        case x :: xs => quickEncodeHelper(xs, acc ::: codeBits(codeTable)(x))
       }
       quickEncodeHelper(text, Nil)(convert(tree))
     }
