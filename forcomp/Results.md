@@ -1,8 +1,8 @@
-Your overall score for this assignment is 7.69 out of 10.00
+Your overall score for this assignment is 8.00 out of 10.00
 
 
 The code you submitted did not pass all of our tests: your submission achieved a score of
-5.69 out of 8.00 in our tests.
+6.00 out of 8.00 in our tests.
 
 In order to find bugs in your code, we advise to perform the following steps:
  - Take a close look at the test output that you can find below: it should point you to
@@ -19,7 +19,7 @@ Our automated style checker tool could not find any issues with your code. You o
 style score of 2.00.
 
 ======== LOG OF FAILED TESTS ========
-Your solution achieved a testing score of 185 out of 260.
+Your solution achieved a testing score of 195 out of 260.
 
 Below you can see a short feedback for every test that failed,
 indicating the reason for the test failure and how many points
@@ -29,10 +29,6 @@ Tests that were aborted took too long too complete or crashed the
 JVM. Such crashes can arise due to infinite non-terminitaing
 loops or recursion (StackOverflowException) or excessive mamory
 consumption (OutOfMemoryException).
-
-[Test Description] sentence anagrams: []
-[Observed Error] List() did not equal List(List())
-[Lost Points] 10
 
 [Test Description] sentence anagrams: Linux rulez
 [Observed Error] test has been aborted
