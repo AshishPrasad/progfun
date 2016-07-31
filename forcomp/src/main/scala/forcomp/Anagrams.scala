@@ -89,18 +89,8 @@ object Anagrams {
     * in the example above could have been displayed in some other order.
     */
   def combinations(occurrences: Occurrences): List[Occurrences] = {
-    def combinationsWithSingleCharRemoved(occurrences: Occurrences): List[Occurrences] = {
-      for {(c, _) <- occurrences} yield subtract(occurrences, List((c, 1)))
-    }
-    def combinationsHelper(occurrences: Occurrences): List[Occurrences] = {
-      val first = combinationsWithSingleCharRemoved(occurrences)
-      val next = for {i <- first; if (!i.isEmpty); occurence <- combinationsHelper(i); if (!occurence.isEmpty)} yield occurence
-      first ::: next
-    }
-    occurrences match {
-      case Nil => List(Nil)
-      case _ => occurrences :: combinationsHelper(occurrences) ::: List(Nil)
-    }
+    val ocs : List[Occurrences] = occurrences.map( x => (for(i <- 1 until (x._2+1)) yield (x._1,i)).toList)
+    ocs.foldRight(List[Occurrences](Nil))((x,y) => y ++ (for(i <- x; j <- y) yield (i :: j)))
   }
 
   /** Subtracts occurrence list `y` from occurrence list `x`.
